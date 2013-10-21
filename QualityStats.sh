@@ -9,7 +9,7 @@ module load apps/fastqc
 cd ~/scratch/CellLineNGS
 
 # D8
-fastqc --noextract -o home/mqbsscbf/scratch/flyNGS/SRA/SRR497729_2.fastq.gz ~/scratch/QualityStats/SRR497729_2.fastq.gz
+fastqc --noextract -o ~/scratch/CellLineNGS/QualityStats SRR497727_2.fastq.gz
 
 # D20-c2
 fastqc --noextract -o ~/scratch/CellLineNGS/QualityStats SRR497724_2.fastq.gz
