@@ -1,0 +1,42 @@
+#!/bin/bash
+#From florence's github mappability folder. 
+#CHECK REFERENCE GENOME IS CORRECT
+
+FILES="/mnt/lustre/scratch/mqbsscbf/flyNGS/DPGP/original/SRR4977*.fastq"
+outputdir="/mnt/lustre/scratch/mfbx9mp5/MappedCellLineNGS"
+ref="/mnt/lustre/scratch/mqbsscbf/Ref_Files/Composite/composite.fa"
+
+for input in $FILES
+do 
+ echo $input
+ sample=`basename $input _1.fastq`
+ echo ${sample}
+ 
+ input1="/mnt/lustre/scratch/mqbsscbf/flyNGS/DPGP/original/${sample}_1.fastq"
+ echo $input1
+ output1="$outputdir/${sample}_1.sai"
+ outputERROR="$outputdir/${sample}_aln1.E"
+ outputQ="$outputdir/${sample}_aln1.Q"
+ echo "Submitting job for $input1"
+ qsub -V -q serial.q -b y -cwd -o /mnt/lustre/scratch/mfbx9mp5/ -e /mnt/lustre/scratch/mfbx9mp5/ -N ${sample}_1 "/usr/bin/bwa aln -t 12 $ref $input1 > $output1"
+ #qsub -V -q smp.q -b y -cwd -o /dev/null -e /dev/null -N ${sample}_1 "/usr/bin/bwa aln -t 12 $ref $input1 > $output1"
+
+ input2="/mnt/lustre/scratch/mqbsscbf/flyNGS/DPGP/original/${sample}_2.fastq"
+ output2="$outputdir/${sample}_2.sai"
+ outputERROR="$outputdir/${sample}_aln2.E"
+ outputQ="$outputdir/${sample}_aln2.Q"
+ echo "Submitting job for $input2"
+ #qsub -V -q smp.q -b y -cwd -o /dev/null -e /dev/null -N ${sample}_2 "/usr/bin/bwa aln -t 12 $ref $input2 > $output2"
+ qsub -V -q serial.q -b y -cwd -o /dev/null -e /dev/null -N ${sample}_2 "/usr/bin/bwa aln -t 12 $ref $input2 > $output2"
+ 
+ BAM="$outputdir/${sample}.bam"
+
+ outputERROR="$outputdir/${sample}_sampe.E"
+ outputQ="$outputdir/${sample}_sampe.Q"
+# qsub -V -q smp.q -b y -cwd -o $outputQ -e $outputERROR -N $sample -hold_jid ${sample}_1,${sample}_2 "/usr/bin/bwa sampe $ref $output1 $output2 $input1 $input2 | samtools view -Shbu - > $BAM"
+ qsub -V -q serial.q -b y -cwd -o $outputQ -e $outputERROR -N $sample -hold_jid ${sample}_1,${sample}_2 "/usr/bin/bwa sampe $ref $output1 $output2 $input1 $input2 | samtools view -Shbu - > $BAM"
+
+# qsub -V -q smp.q -b y -cwd -o /dev/null -e /dev/null -N ${sample}_rm -hold_jid $sample "rm $output1 $output2" 
+ qsub -V -q serial.q -b y -cwd -o /dev/null -e /dev/null -N ${sample}_rm -hold_jid $sample "rm $output1 $output2" 
+ 
+done
