@@ -3,12 +3,11 @@
 #Edited From Danny's Github mappability folder. 
 #https://github.com/bergmanlab/florence/blob/master/scripts/mapping/bwa-aln-full-composite.sh
 
-inputdir="/mnt/lustre/scratch/mqbsscbf/flyNGS/DCC/"
-outputdir="~/DCCMapped/"
+inputdir="/mnt/lustre/scratch/mqbsscbf/flyNGS/DCC"
+outputdir="/mnt/lustre/scratch/mfbx9mp5/DCCMapped"
 ref="/mnt/lustre/scratch/mqbsscbf/Ref_Files/Composite/composite.fa"
 
 
-#for input in $inputdir/*.fastq.gz
 for input in $inputdir/*.fastq.gz
 do 
  #echo $input
@@ -21,9 +20,7 @@ do
  echo "Submitting job for $input"
  qsub -V -q smp.q -b y -cwd -o /dev/null -e /dev/null -N aln_${sample}_1 "/usr/bin/bwa aln -t 12 -q 20 $ref $input1 > $output1"
 
-
  BAM="$outputdir/${sample}"
-
  outputERROR="$outputdir/${sample}_sampe.E"
  outputQ="$outputdir/${sample}_sampe.Q"
  qsub -V -q smp.q -b y -cwd -o $outputQ -e $outputERROR -N bam_${sample} -hold_jid aln_${sample} "/usr/bin/bwa samse $ref $output1 $input1 | samtools view -Shu - | samtools sort - $BAM"
