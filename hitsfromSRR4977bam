@@ -1,0 +1,30 @@
+#!/bin/bash
+#
+# This is a shell script
+# This shell script will prepare .hits files from aligned.bam against SRR4977*.sorted.bam 
+# Run in following directory /Volumes/PhD_Drive/Workspace/MappedReads/SRR4977*Files
+
+
+samtools view -F 4 SRR497710.sorted.bam | perl -lane 'print "$F[2]\t$F[3]"' > SRR497710.hits
+samtools view -F 4 SRR497711.sorted.bam | perl -lane 'print "$F[2]\t$F[3]"' > SRR497711.hits
+samtools view -F 4 SRR497712.sorted.bam | perl -lane 'print "$F[2]\t$F[3]"' > SRR497712.hits
+samtools view -F 4 SRR497713.sorted.bam | perl -lane 'print "$F[2]\t$F[3]"' > SRR497713.hits
+samtools view -F 4 SRR497714.sorted.bam | perl -lane 'print "$F[2]\t$F[3]"' > SRR497714.hits
+samtools view -F 4 SRR497715.sorted.bam | perl -lane 'print "$F[2]\t$F[3]"' > SRR497715.hits
+samtools view -F 4 SRR497716.sorted.bam | perl -lane 'print "$F[2]\t$F[3]"' > SRR497716.hits
+samtools view -F 4 SRR497717.sorted.bam | perl -lane 'print "$F[2]\t$F[3]"' > SRR497717.hits
+samtools view -F 4 SRR497718.sorted.bam | perl -lane 'print "$F[2]\t$F[3]"' > SRR497718.hits
+samtools view -F 4 SRR497719.sorted.bam | perl -lane 'print "$F[2]\t$F[3]"' > SRR497719.hits
+samtools view -F 4 SRR497720.sorted.bam | perl -lane 'print "$F[2]\t$F[3]"' > SRR497720.hits
+samtools view -F 4 SRR497721.sorted.bam | perl -lane 'print "$F[2]\t$F[3]"' > SRR497721.hits
+samtools view -F 4 SRR497722.sorted.bam | perl -lane 'print "$F[2]\t$F[3]"' > SRR497722.hits
+samtools view -F 4 SRR497723.sorted.bam | perl -lane 'print "$F[2]\t$F[3]"' > SRR497723.hits
+samtools view -F 4 SRR497724.sorted.bam | perl -lane 'print "$F[2]\t$F[3]"' > SRR497724.hits
+samtools view -F 4 SRR497725.sorted.bam | perl -lane 'print "$F[2]\t$F[3]"' > SRR497725.hits
+samtools view -F 4 SRR497726.sorted.bam | perl -lane 'print "$F[2]\t$F[3]"' > SRR497726.hits
+samtools view -F 4 SRR497727.sorted.bam | perl -lane 'print "$F[2]\t$F[3]"' > SRR497727.hits
+samtools view -F 4 SRR497728.sorted.bam | perl -lane 'print "$F[2]\t$F[3]"' > SRR497728.hits
+samtools view -F 4 SRR497729.sorted.bam | perl -lane 'print "$F[2]\t$F[3]"' > SRR497729.hits
+samtools view -F 4 SRR497730.sorted.bam | perl -lane 'print "$F[2]\t$F[3]"' > SRR497730.hits
+
+echo ".hits generated"
